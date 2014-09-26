@@ -1,5 +1,9 @@
 from datetime import date, datetime, time, timedelta
 
+class SessionType(Enum):
+    MORNING = 1
+    AFTERNOON = 2
+
 class Track(object):
 
 	def __init__(self, label, morning, afternoon, morning_duration, afternoon_duration):
