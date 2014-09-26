@@ -1,4 +1,5 @@
 from datetime import date, datetime, time, timedelta
+from enum import Enum
 
 class SessionType(Enum):
     MORNING = 1
