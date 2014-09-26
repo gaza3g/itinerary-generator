@@ -1,10 +1,20 @@
+from enum import Enum
+
+class SessionType(Enum):
+    MORNING = 1
+    AFTERNOON = 2
+
 class Session(object):
 
-	def __init__(self, label, time_capacity):
+	def __init__(self, session_type, label, time_capacity):
+		self.session_type = session_type
 		self.label = label
 		self.time_capacity = time_capacity
 		self.remaining = time_capacity
 		self.talks = []
+
+	#
+	def is_valid
 
 	def append(self, talk):
 		if self.remaining >= talk.duration:
