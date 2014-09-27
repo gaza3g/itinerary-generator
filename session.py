@@ -31,5 +31,33 @@ class Session(object):
 
 
 
+class AMSession(Session):
+
+	def __init__(self, time_capacity):
+		self.remaining = time_capacity.value
+		super(AMSession, self).__init__(time_capacity)
+
+	def is_valid(self):
+		return self.remaining == 0
+
+
+class PMSession(Session):
+
+	def __init__(self, time_capacity, minimum_capacity):
+		self.remaining = time_capacity.value
+		self.minimum_capacity = minimum_capacity.value
+		super(PMSession, self).__init__(time_capacity)
+
+	def is_valid(self):
+		return super(PMSession, self).total_talk_duration() > self.minimum_capacity
+
+
+
+
+
+
+
+
+
 
 

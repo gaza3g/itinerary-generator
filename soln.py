@@ -2,7 +2,7 @@ import sys
 import random
 from datetime import date, datetime, time, timedelta
 from track import Track
-from session import Session
+from session import Session, AMSession, PMSession
 from talk import Talk
 import csv
 from collections import defaultdict
@@ -42,13 +42,13 @@ def main():
 		random.shuffle(talks)
 
 		t1 = Track("Track One",
-					Session(SessionDuration.AM), 
-					Session(SessionDuration.PM_MAX)
+					AMSession(SessionDuration.AM), 
+					PMSession(SessionDuration.PM_MAX, SessionDuration.PM_MIN)
 		)
 
 		t2 = Track("Track Two",
-					Session(SessionDuration.AM), 
-					Session(SessionDuration.PM_MAX)
+					AMSession(SessionDuration.AM), 
+					PMSession(SessionDuration.PM_MAX, SessionDuration.PM_MIN)
 		)
 
 		''' 
@@ -108,13 +108,24 @@ def main():
 				break
 
 
-		if t1.is_schedule_valid() and \
-			 t2.is_schedule_valid() and \
+		# if t1.is_schedule_valid() and \
+		# 	 t2.is_schedule_valid() and \
+		# 	 t1.total_talks() + t2.total_talks() == len(all_talks):			
+		# 	print("Valid conference itinerary found at iteration: {}".format(i))
+		# 	print(t1)
+		# 	print(t2)
+		# 	break
+
+		if t1.morning.is_valid() and \
+			 t1.afternoon.is_valid() and \
+			 t2.morning.is_valid() and \
+			 t2.afternoon.is_valid() and \
 			 t1.total_talks() + t2.total_talks() == len(all_talks):			
 			print("Valid conference itinerary found at iteration: {}".format(i))
 			print(t1)
 			print(t2)
 			break
+
 
 		i += 1
 
