@@ -66,7 +66,7 @@ def main():
 		time to fit in all the talks in the list
 		'''
 		total_time_for_all_talks = sum(t.duration for t in talks)
-		total_time_capacity = sum(s.time_capacity for s in sessions) 
+		total_time_capacity = sum(s.time_allocated for s in sessions) 
 
 		if total_time_for_all_talks > total_time_capacity:
 			print("Please allocate more space to the sessions in order to " + \
@@ -134,3 +134,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+    
