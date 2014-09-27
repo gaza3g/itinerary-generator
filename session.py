@@ -47,10 +47,6 @@ has to be 0 in order for an AM session to be valid.
 '''
 class AMSession(Session):
 
-	def __init__(self, time_allocated):
-		self.remaining = time_allocated
-		super(AMSession, self).__init__(time_allocated)
-
 	def is_valid(self):
 		return self.remaining == 0
 
@@ -63,12 +59,11 @@ which means, 180 <= self.remaining <= 240
 class PMSession(Session):
 
 	def __init__(self, time_allocated, minimum_duration):
-		self.remaining = time_allocated
 		self.minimum_duration = minimum_duration
 		super(PMSession, self).__init__(time_allocated)
 
 	def is_valid(self):
-		return super(PMSession, self).total_talk_duration() > self.minimum_duration
+		return self.total_talk_duration() > self.minimum_duration
 
 
 

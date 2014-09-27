@@ -54,7 +54,7 @@ def main():
 					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
-		
+
 		c = Conference([t1,t2])
 
 		''' 

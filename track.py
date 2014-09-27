@@ -44,6 +44,7 @@ class Track(object):
 		gonna work.
 		'''
 		for session in self.sessions:
+			print(session.is_valid())
 			if not session.is_valid():
 				return False
 
