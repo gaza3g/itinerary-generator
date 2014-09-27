@@ -4,18 +4,17 @@ AM or PM session.
 '''
 class Session(object):
 
-	'''
-	Time capacity refers to the amount of time 
-	allocated for this session in minutes.
-	for e.g
-	If session is from 9AM-12PM then time allocated
-	would be 180(3hrs)
-	'''
 	def __init__(self, time_allocated):
 		self.time_allocated = time_allocated
 		self.remaining = time_allocated
 		self.talks = []
 
+	'''
+	Append 'talk' to current list of talks and 
+	update our remaining minutes. Return False
+	if the duration of the talk is too long to
+	fit in this session 
+	'''
 	def append(self, talk):
 		if self.remaining >= talk.duration:
 			self.talks.append(talk)
@@ -24,20 +23,34 @@ class Session(object):
 		else:
 			return False
 
+	'''
+	Session is full. Not accepting anymore talks
+	'''
 	def is_full(self):
 		return self.remaining == 0
 
+
+	'''
+	Returns a count of the talks in this session
+	'''
 	def talk_count(self):
 		return len(self.talks)
 
+
+	'''
+	To be implemented by subclass based on their
+	own constraints
+	'''
 	def is_valid(self):
 		raise NotImplementedError
 
+
+	'''
+	Number of minutes used by the talks already
+	added to this session
+	'''
 	def total_talk_duration(self):
 		return self.time_allocated - self.remaining
-
-	def __str__(self):
-		return ''.join(str(self.talks))
 
 
 '''

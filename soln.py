@@ -7,15 +7,51 @@ from talk import Talk
 from conference import Conference
 import csv
 from collections import defaultdict
-from enum import Enum
+from datetime import date, datetime, time, timedelta
+'''
+Define time constants that will
+be used for sessions in this particular 
+conference:
 
+Morning session is allowed to be from:
+9AM-12PM(3hrs) = 180mins 
 
+Afternoon session starts at 1pm and can be as short as 4pm:
+1PM-4PM(3hrs) = 180mins
+
+Afternoon session can also last until 5pm:
+1PM-5PM(4hrs) = 240mins
+'''
 SESSION_DURATION = {
 	'AM': 180,
 	'PM_MIN': 180,
 	'PM_MAX': 240
 }
 
+
+'''
+Define timings used for each session
+'''
+SESSION_TIMINGS = {
+	
+	'MORNING' : datetime.combine(date.today(), time(9, 0)),
+
+	'LUNCH' : datetime.combine(date.today(), time(12, 0)) ,
+
+	'AFTERNOON' : datetime.combine(date.today(), time(13, 0)) 
+
+}
+
+'''
+Load a list of talks from CSV file
+Filename: input.csv
+Format:
+<topic>,<duration>
+For e.g:
+"Ruby on Rails Legacy App Maintenance", 60
+"A World Without HackerNews", 30
+"User Interface CSS in Rails Apps", 30
+'''
 def load_talks_from_csv():
 	talks = []
 
@@ -30,9 +66,12 @@ def load_talks_from_csv():
 
 	return talks
 
-
+'''
+This is where the actual work will take place
+'''
 def main():
 
+		
 	all_talks = load_talks_from_csv()
 
 
@@ -55,7 +94,11 @@ def main():
 		)
 
 
-		c = Conference([t1,t2])
+		c = Conference(SESSION_TIMINGS['MORNING'], 
+						SESSION_TIMINGS['LUNCH'], 
+						SESSION_TIMINGS['AFTERNOON'])
+		c.append(t1)
+		c.append(t2)
 
 		''' 
 		Group available sessions from both tracks so that we can populate
@@ -125,7 +168,6 @@ def main():
 		if c.is_valid() and c.talk_count() == len(all_talks):
 			print("Valid conference itinerary found at iteration: {}".format(i))
 			print(c.schedule_string())
-			# print(t2)
 			break
 
 		i += 1
