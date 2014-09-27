@@ -71,8 +71,14 @@ This is where the actual work will take place
 '''
 def main():
 
-
 	all_talks = load_talks_from_csv()
+
+	'''
+	Sum up all the minutes for all the talks that we
+	loaded from CSV
+	'''
+	total_time_for_all_talks = sum(t.duration for t in all_talks)
+
 
 
 	i = 0
@@ -84,17 +90,13 @@ def main():
 		random.shuffle(talks)
 
 		t1 = Track("Track One",
-					[
-						AMSession(SESSION_DURATION['AM']), 
-						PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
-					]
+					AMSession(SESSION_DURATION['AM']), 
+					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
 		t2 = Track("Track Two",
-					[
-						AMSession(SESSION_DURATION['AM']), 
-						PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
-					]
+					AMSession(SESSION_DURATION['AM']), 
+					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
 
@@ -104,26 +106,21 @@ def main():
 		c.append(t1)
 		c.append(t2)
 
-		''' 
-		Group available sessions from both tracks so that we can populate
-		them later
 		'''
-		sessions = [t1.morning, t1.afternoon, t2.morning, t2.afternoon]
-
-
-
-		'''
-		first check to ensure that our sessions have been allocated enough
+		Check to ensure that our sessions have been allocated enough
 		time to fit in all the talks in the list
 		'''
-		total_time_for_all_talks = sum(t.duration for t in talks)
-		total_time_capacity = sum(s.time_allocated for s in sessions) 
-
-		if total_time_for_all_talks > total_time_capacity:
+		if total_time_for_all_talks > c.time_allocated():
 			print("Please allocate more space to the sessions in order to " + \
 					"accomodate all the talks.\n" + \
-					"Total talk time: {}\nTotal time allocated in sessions:{}\n\n".format(total_time_for_all_talks, total_time_capacity))
-			break
+					"Total talk time: {}\nTotal time allocated in sessions:{}\n\n".format(total_time_for_all_talks, c.time_allocated()))
+
+			sys.exit()
+
+		''' 
+		Multi-capacity bin that we will populate with talks
+		'''
+		sessions = c.get_all_sessions()
 
 
 		'''

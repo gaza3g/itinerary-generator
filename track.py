@@ -1,14 +1,20 @@
 class Track(object):
 
-	def __init__(self, label, *sessions):
+	def __init__(self, label, morning, afternoon):
 		self.label = label
-		# self.morning = morning
-		# self.afternoon = afternoon
-		self.sessions = sessions
+		self.morning = morning
+		self.afternoon = afternoon
+		self.sessions = [morning, afternoon]
 
 
 	def talk_count(self):
 		return sum(s.talk_count() for s in self.sessions)
+
+	def total_talk_duration(self):
+		return sum(s.total_talk_duration() for s in self.sessions)
+
+	def time_allocated(self):
+		return sum(s.time_allocated for s in self.sessions)
 
 	'''
 	Let 'sessions' do their own validation.
