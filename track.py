@@ -31,8 +31,23 @@ class Track(object):
 	# def is_schedule_valid(self):
 	# 	return self.is_morning_schedule_valid() and self.is_afternoon_schedule_valid()
 
+	'''
+	Let 'sessions' do their own validation.
+	We just need to make sure there aren't
+	any invalid session in this track.
+	'''
 	def is_valid(self):
-		return self.morning.is_valid() and self.afternoon.is_valid()
+
+		'''
+		If either session is found to be invalid, 
+		then this conference itinerary is not
+		gonna work.
+		'''
+		for session in self.sessions:
+			if not session.is_valid():
+				return False
+
+		return True
 
 	def schedule_string(self):
 		current_time = current_time = datetime.combine(date.today(), time(9, 0)) 

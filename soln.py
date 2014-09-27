@@ -54,6 +54,9 @@ def main():
 					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
+		
+		c = Conference([t1,t2])
+
 		''' 
 		Group available sessions from both tracks so that we can populate
 		them later
@@ -111,41 +114,12 @@ def main():
 				break
 
 
-		# if t1.is_schedule_valid() and \
-		# 	 t2.is_schedule_valid() and \
-		# 	 t1.total_talks() + t2.total_talks() == len(all_talks):			
-		# 	print("Valid conference itinerary found at iteration: {}".format(i))
-		# 	print(t1)
-		# 	print(t2)
-		# 	break
-		c = Conference([t1,t2])
 
 		if c.is_valid() and c.talk_count() == len(all_talks):
 			print("Valid conference itinerary found at iteration: {}".format(i))
 			print(t1)
 			print(t2)
 			break
-
-
-		# if t1.is_valid() and \
-		# 	 t2.is_valid() and \
-		# 	 c.talk_count() == len(all_talks):			
-		# 	print("Valid conference itinerary found at iteration: {}".format(i))
-		# 	print(t1)
-		# 	print(t2)
-		# 	break
-
-
-		# if t1.morning.is_valid() and \
-		# 	 t1.afternoon.is_valid() and \
-		# 	 t2.morning.is_valid() and \
-		# 	 t2.afternoon.is_valid() and \
-		# 	 t1.total_talks() + t2.total_talks() == len(all_talks):			
-		# 	print("Valid conference itinerary found at iteration: {}".format(i))
-		# 	print(t1)
-		# 	print(t2)
-		# 	break
-
 
 		i += 1
 
