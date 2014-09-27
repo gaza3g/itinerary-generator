@@ -6,15 +6,12 @@ from session import Session
 from talk import Talk
 import csv
 from collections import defaultdict
+from enum import Enum
 
-MORNING_SESSION_DURATION = 180
-MAX_AFTERNOON_SESSION_DURATION = 240
-MIN_AFTERNOON_SESSION_DURATION = 180
-
-TRACK1_MORNING_SESSION = "Track 1: Morning Session"
-TRACK1_AFTERNOON_SESSION = "Track 1: Afternoon Session"
-TRACK2_MORNING_SESSION = "Track 2: Morning Session"
-TRACK2_AFTERNOON_SESSION = "Track 2: Afternoon Session"
+class SessionDuration(Enum):
+    AM = 180
+    PM_MIN = 180
+    PM_MAX = 240
 
 def load_talks_from_csv():
 	talks = []
@@ -35,8 +32,6 @@ def main():
 
 	all_talks = load_talks_from_csv()
 
-	print("SYS EXIT IS CALLED")
-	sys.exit()
 
 	i = 0
 
@@ -46,28 +41,18 @@ def main():
 
 		random.shuffle(talks)
 
-		sessions = [
-						Session(TRACK1_MORNING_SESSION, MORNING_SESSION_DURATION), 
-						Session(TRACK1_AFTERNOON_SESSION, MAX_AFTERNOON_SESSION_DURATION), 
-						Session(TRACK2_MORNING_SESSION, MORNING_SESSION_DURATION), 
-						Session(TRACK2_AFTERNOON_SESSION, MAX_AFTERNOON_SESSION_DURATION)
-					]
+		t1 = Track("Track One",
+					Session(SessionDuration.AM), 
+					Session(SessionDuration.PM_MAX)
+		)
 
-		t1 = Track("Track One", 
-					sessions[0], 
-					sessions[1], 
-					MORNING_SESSION_DURATION, 
-					MAX_AFTERNOON_SESSION_DURATION
-			)
+		t2 = Track("Track Two",
+					Session(SessionDuration.AM), 
+					Session(SessionDuration.PM_MAX)
+		)
 
-		t2 = Track("Track Two", sessions[2], sessions[3], MORNING_SESSION_DURATION, MAX_AFTERNOON_SESSION_DURATION)
+		sessions = [t1.morning, t1.afternoon, t2.morning, t2.afternoon]
 
-		# sessions = [
-		# 				Session(TRACK1_MORNING_SESSION, MORNING_SESSION_DURATION), 
-		# 				Session(TRACK1_AFTERNOON_SESSION, MAX_AFTERNOON_SESSION_DURATION), 
-		# 				Session(TRACK2_MORNING_SESSION, MORNING_SESSION_DURATION), 
-		# 				Session(TRACK2_AFTERNOON_SESSION, MAX_AFTERNOON_SESSION_DURATION)
-		# 			]
 
 
 		# first check to ensure that our sessions have been allocated enough
@@ -103,9 +88,6 @@ def main():
 						"but not big enough to accomodate this talk: \n{}\nSkipped this iteration\n\n".format(talks[0]))
 				break
 
-
-		t1 = Track("Track One", sessions[0], sessions[1], MORNING_SESSION_DURATION, MAX_AFTERNOON_SESSION_DURATION)
-		t2 = Track("Track Two", sessions[2], sessions[3], MORNING_SESSION_DURATION, MAX_AFTERNOON_SESSION_DURATION)
 
 		if t1.is_schedule_valid() and \
 			 t2.is_schedule_valid() and \

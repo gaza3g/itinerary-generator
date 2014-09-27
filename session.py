@@ -1,9 +1,12 @@
+'''
+Session object is used to store either
+AM or PM session. 
+'''
 class Session(object):
 
-	def __init__(self, label, time_capacity):
-		self.label = label
-		self.time_capacity = time_capacity
-		self.remaining = time_capacity
+	def __init__(self, time_capacity):
+		self.time_capacity = time_capacity.value
+		self.remaining = time_capacity.value
 		self.talks = []
 
 	def append(self, talk):
@@ -17,9 +20,18 @@ class Session(object):
 	def is_full(self):
 		return self.remaining == 0
 
+	def is_valid(self):
+		return self.is_full()
+
 	def total_talk_duration(self):
 		return self.time_capacity - self.remaining
 
 	def __str__(self):
 		return ''.join(str(self.talks))
+
+	def get_session_type(self):
+		raise NotImplementedError
+
+
+
 

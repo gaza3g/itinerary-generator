@@ -2,7 +2,7 @@ from datetime import date, datetime, time, timedelta
 
 class Track(object):
 
-	def __init__(self, label, morning, afternoon, morning_duration, afternoon_duration):
+	def __init__(self, label, morning, afternoon):
 		self.label = label
 		self.morning = morning
 		self.afternoon = afternoon
