@@ -1,8 +1,11 @@
+import sys
 import random
 from datetime import date, datetime, time, timedelta
 from track import Track
 from session import Session
 from talk import Talk
+import csv
+from collections import defaultdict
 
 MORNING_SESSION_DURATION = 180
 MAX_AFTERNOON_SESSION_DURATION = 240
@@ -13,29 +16,24 @@ TRACK1_AFTERNOON_SESSION = "Track 1: Afternoon Session"
 TRACK2_MORNING_SESSION = "Track 2: Morning Session"
 TRACK2_AFTERNOON_SESSION = "Track 2: Afternoon Session"
 
-def main():
-	all_talks = [
-	Talk("Writing Fast Tests Against Enterprise Rails", 60),
-	Talk("Overdoing it in Python", 45),
-	Talk("Lua for the Masses", 30),
-	Talk("Ruby Errors from Mismatched Gem Versions", 45),
-	Talk("Common Ruby Errors", 45),
-	Talk("Rails for Python Developers", 5),
-	Talk("Communicating Over Distance", 60),
-	Talk("Accounting-Driven Development", 45),
-	Talk("Woah", 30),
-	Talk("Sit Down and Write", 30),
-	Talk("Pair Programming vs Noise", 45),
-	Talk("Rails Magic", 60),
-	Talk("Ruby on Rails: Why We Should Move On", 60),
-	Talk("Clojure Ate Scala (on my project)", 45),
-	Talk("Programming in the Boondocks of Seattle", 30),
-	Talk("Ruby vs. Clojure for Back-End Development", 30),
-	Talk("Ruby on Rails Legacy App Maintenance", 60),
-	Talk("A World Without HackerNews", 30),
-	Talk("User Interface CSS in Rails Apps", 30),
-	]
+def load_talks_from_csv():
+	talks = []
 
+	input_file = open('input.csv', 'r', newline='')
+
+	data = csv.reader(input_file)
+
+	for line in data:
+		if len(line) == 2:
+			[topic, duration] = line
+			talks.append(Talk(topic, int(duration)))
+
+	return talks
+
+
+def main():
+
+	all_talks = load_talks_from_csv()
 
 	i = 0
 
