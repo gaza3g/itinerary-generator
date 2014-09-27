@@ -1,10 +1,10 @@
 class Track(object):
 
-	def __init__(self, label, morning, afternoon):
+	def __init__(self, label, *sessions):
 		self.label = label
-		self.morning = morning
-		self.afternoon = afternoon
-		self.sessions = [morning, afternoon]
+		# self.morning = morning
+		# self.afternoon = afternoon
+		self.sessions = sessions
 
 
 	def talk_count(self):

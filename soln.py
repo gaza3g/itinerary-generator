@@ -71,7 +71,7 @@ This is where the actual work will take place
 '''
 def main():
 
-		
+
 	all_talks = load_talks_from_csv()
 
 
@@ -84,13 +84,17 @@ def main():
 		random.shuffle(talks)
 
 		t1 = Track("Track One",
-					AMSession(SESSION_DURATION['AM']), 
-					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+					[
+						AMSession(SESSION_DURATION['AM']), 
+						PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+					]
 		)
 
 		t2 = Track("Track Two",
-					AMSession(SESSION_DURATION['AM']), 
-					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+					[
+						AMSession(SESSION_DURATION['AM']), 
+						PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+					]
 		)
 
 
