@@ -142,7 +142,9 @@ def main():
 			'''
 			can_fit_in_at_least_one_session = False
 
-			# Do first-fit bin packing
+			''' 
+			Start doing first-fit bin packing
+			'''
 			for session in sessions:
 				if session.is_full():
 					continue
