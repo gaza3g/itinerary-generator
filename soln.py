@@ -111,14 +111,21 @@ def main():
 			if not can_fit_in_at_least_one_session:
 				print("Sessions still have spaces in them " + \
 						"but not big enough to accomodate this talk: \n{}\nSkipped this iteration\n\n".format(talks[0]))
+
+				'''
+				Skip this loop so we can work another permutation of talks
+				'''
 				break
 
 
-
+		'''
+		All talks have now been distributed successfully so now we just need to ensure 
+		the conference passes the contraints of our itinerary
+		'''
 		if c.is_valid() and c.talk_count() == len(all_talks):
 			print("Valid conference itinerary found at iteration: {}".format(i))
-			print(t1)
-			print(t2)
+			print(c.schedule_string())
+			# print(t2)
 			break
 
 		i += 1
