@@ -35,6 +35,9 @@ def main():
 
 	all_talks = load_talks_from_csv()
 
+	print("SYS EXIT IS CALLED")
+	sys.exit()
+
 	i = 0
 
 	while True:
