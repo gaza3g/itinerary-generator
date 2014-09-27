@@ -8,10 +8,12 @@ import csv
 from collections import defaultdict
 from enum import Enum
 
-class SessionDuration(Enum):
-    AM = 180
-    PM_MIN = 180
-    PM_MAX = 240
+
+SESSION_DURATION = {
+	'AM': 180,
+	'PM_MIN': 180,
+	'PM_MAX': 240
+}
 
 def load_talks_from_csv():
 	talks = []
@@ -42,13 +44,13 @@ def main():
 		random.shuffle(talks)
 
 		t1 = Track("Track One",
-					AMSession(SessionDuration.AM), 
-					PMSession(SessionDuration.PM_MAX, SessionDuration.PM_MIN)
+					AMSession(SESSION_DURATION['AM']), 
+					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
 		t2 = Track("Track Two",
-					AMSession(SessionDuration.AM), 
-					PMSession(SessionDuration.PM_MAX, SessionDuration.PM_MIN)
+					AMSession(SESSION_DURATION['AM']), 
+					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
 		)
 
 		''' 

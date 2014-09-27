@@ -5,8 +5,8 @@ AM or PM session.
 class Session(object):
 
 	def __init__(self, time_capacity):
-		self.time_capacity = time_capacity.value
-		self.remaining = time_capacity.value
+		self.time_capacity = time_capacity
+		self.remaining = time_capacity
 		self.talks = []
 
 	def append(self, talk):
@@ -34,7 +34,7 @@ class Session(object):
 class AMSession(Session):
 
 	def __init__(self, time_capacity):
-		self.remaining = time_capacity.value
+		self.remaining = time_capacity
 		super(AMSession, self).__init__(time_capacity)
 
 	def is_valid(self):
@@ -44,8 +44,8 @@ class AMSession(Session):
 class PMSession(Session):
 
 	def __init__(self, time_capacity, minimum_capacity):
-		self.remaining = time_capacity.value
-		self.minimum_capacity = minimum_capacity.value
+		self.remaining = time_capacity
+		self.minimum_capacity = minimum_capacity
 		super(PMSession, self).__init__(time_capacity)
 
 	def is_valid(self):
