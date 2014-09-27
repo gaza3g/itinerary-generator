@@ -21,7 +21,7 @@ class Session(object):
 		return self.remaining == 0
 
 	def is_valid(self):
-		return self.is_full()
+		raise NotImplementedError
 
 	def total_talk_duration(self):
 		return self.time_capacity - self.remaining
@@ -29,8 +29,6 @@ class Session(object):
 	def __str__(self):
 		return ''.join(str(self.talks))
 
-	def get_session_type(self):
-		raise NotImplementedError
 
 
 

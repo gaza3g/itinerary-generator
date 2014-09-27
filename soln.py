@@ -51,12 +51,18 @@ def main():
 					Session(SessionDuration.PM_MAX)
 		)
 
+		''' 
+		Group available sessions from both tracks so that we can populate
+		them later
+		'''
 		sessions = [t1.morning, t1.afternoon, t2.morning, t2.afternoon]
 
 
 
-		# first check to ensure that our sessions have been allocated enough
-		# time to fit in all the talks in the list
+		'''
+		first check to ensure that our sessions have been allocated enough
+		time to fit in all the talks in the list
+		'''
 		total_time_for_all_talks = sum(t.duration for t in talks)
 		total_time_capacity = sum(s.time_capacity for s in sessions) 
 
@@ -66,11 +72,24 @@ def main():
 					"Total talk time: {}\nTotal time allocated in sessions:{}\n\n".format(total_time_for_all_talks, total_time_capacity))
 			break
 
+
+		'''
+		Loop while there are still talks that have yet to be allocated
+		to a session
+		'''
 		while len(talks) != 0:
 
-			# Break out of the loop if all sessions still have
-			# spaces in them but not big enough to accomodate the
-			# current talk
+			'''
+			Use this to break out of the loop if all sessions still have
+			space in them but not big enough to accomodate the
+			current talk
+			for e.g.
+			Python for beginners: 60mins
+			Track 1, AM session: 30mins unallocated
+			Track 1, PM session: 15mins unallocated
+			Track 2, AM session: 5mins unallocated
+			Track 2, PM session: 30mins unallocated
+			'''
 			can_fit_in_at_least_one_session = False
 
 			# Do first-fit bin packing
