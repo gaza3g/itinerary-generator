@@ -27,6 +27,9 @@ class Session(object):
 	def is_full(self):
 		return self.remaining == 0
 
+	def talk_count(self):
+		return len(self.talks)
+
 	def is_valid(self):
 		raise NotImplementedError
 

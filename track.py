@@ -6,16 +6,18 @@ class Track(object):
 		self.label = label
 		self.morning = morning
 		self.afternoon = afternoon
+		self.sessions = [morning, afternoon]
 
-	def is_morning_schedule_valid(self):
-		return self.morning.total_talk_duration() == 180
+	# def is_morning_schedule_valid(self):
+	# 	return self.morning.total_talk_duration() == 180
 
-	def is_afternoon_schedule_valid(self):
-		return self.afternoon.total_talk_duration() >= 180 and \
-				self.afternoon.total_talk_duration() <= 240
+	# def is_afternoon_schedule_valid(self):
+	# 	return self.afternoon.total_talk_duration() >= 180 and \
+	# 			self.afternoon.total_talk_duration() <= 240
 
-	def total_talks(self):
-		return len(self.morning.talks) + len(self.afternoon.talks)
+	def talk_count(self):
+		#return len(self.morning.talks) + len(self.afternoon.talks)
+		return sum(s.talk_count() for s in self.sessions)
 
 	def networking_event_start_time(self):
 		total_track_duration = self.morning.total_talk_duration() + \
@@ -26,8 +28,11 @@ class Track(object):
 				timedelta(minutes=total_track_duration)
 
 
-	def is_schedule_valid(self):
-		return self.is_morning_schedule_valid() and self.is_afternoon_schedule_valid()
+	# def is_schedule_valid(self):
+	# 	return self.is_morning_schedule_valid() and self.is_afternoon_schedule_valid()
+
+	def is_valid(self):
+		return self.morning.is_valid() and self.afternoon.is_valid()
 
 	def schedule_string(self):
 		current_time = current_time = datetime.combine(date.today(), time(9, 0)) 

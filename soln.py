@@ -4,6 +4,7 @@ from datetime import date, datetime, time, timedelta
 from track import Track
 from session import Session, AMSession, PMSession
 from talk import Talk
+from conference import Conference
 import csv
 from collections import defaultdict
 from enum import Enum
@@ -117,16 +118,29 @@ def main():
 		# 	print(t1)
 		# 	print(t2)
 		# 	break
+		c = Conference([t1,t2])
 
-		if t1.morning.is_valid() and \
-			 t1.afternoon.is_valid() and \
-			 t2.morning.is_valid() and \
-			 t2.afternoon.is_valid() and \
-			 t1.total_talks() + t2.total_talks() == len(all_talks):			
+
+
+		if t1.is_valid() and \
+			 t2.is_valid(): # and \
+			 #t1.total_talks() + t2.total_talks() == len(all_talks):			
 			print("Valid conference itinerary found at iteration: {}".format(i))
 			print(t1)
 			print(t2)
+			print("total talks: ", c.talk_count(), "\nall talks: ", len(all_talks))
 			break
+
+
+		# if t1.morning.is_valid() and \
+		# 	 t1.afternoon.is_valid() and \
+		# 	 t2.morning.is_valid() and \
+		# 	 t2.afternoon.is_valid() and \
+		# 	 t1.total_talks() + t2.total_talks() == len(all_talks):			
+		# 	print("Valid conference itinerary found at iteration: {}".format(i))
+		# 	print(t1)
+		# 	print(t2)
+		# 	break
 
 
 		i += 1
@@ -141,4 +155,3 @@ if __name__ == "__main__":
 
 
 
-    
