@@ -120,16 +120,20 @@ def main():
 		# 	break
 		c = Conference([t1,t2])
 
-
-
-		if t1.is_valid() and \
-			 t2.is_valid(): # and \
-			 #t1.total_talks() + t2.total_talks() == len(all_talks):			
+		if c.is_valid() and c.talk_count() == len(all_talks):
 			print("Valid conference itinerary found at iteration: {}".format(i))
 			print(t1)
 			print(t2)
-			print("total talks: ", c.talk_count(), "\nall talks: ", len(all_talks))
 			break
+
+
+		# if t1.is_valid() and \
+		# 	 t2.is_valid() and \
+		# 	 c.talk_count() == len(all_talks):			
+		# 	print("Valid conference itinerary found at iteration: {}".format(i))
+		# 	print(t1)
+		# 	print(t2)
+		# 	break
 
 
 		# if t1.morning.is_valid() and \
