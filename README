@@ -1,0 +1,21 @@
+INFO
+========
+
+Input file is stored inside input.csv
+
+
+This script has been tested on Python 3.
+You can generate the schedule by:
+
+ $ python3 soln.py
+
+
+In a nutshell this is what the script does:
+
+- Load all talks from input.csv into a list
+- Shuffle the list
+- Create 4 lists to represent 4 bins(Track 1 AM, Track 1 PM, Track 2 AM, Track 2 PM)
+- Use First-First to try and pack in the talks into each session
+- Check if final results meets the imposed constraints
+- If yes, show the proposed schedule
+- If not, keep generating a new set of talk order and loop until a valid schedule is found.

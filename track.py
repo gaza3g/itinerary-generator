@@ -1,11 +1,14 @@
+'''
+Represents the different tracks in a conference.
+A track typically consists of two sessions
+Each session will contain multiple talks
+'''
+
 class Track(object):
 
-	def __init__(self, label, morning, afternoon):
+	def __init__(self, label, *sessions):
 		self.label = label
-		self.morning = morning
-		self.afternoon = afternoon
-		self.sessions = [morning, afternoon]
-
+		self.sessions = list(sessions[0])
 
 	def talk_count(self):
 		return sum(s.talk_count() for s in self.sessions)

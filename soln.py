@@ -1,13 +1,14 @@
 import sys
 import random
-from datetime import date, datetime, time, timedelta
-from track import Track
-from session import Session, AMSession, PMSession
-from talk import Talk
-from conference import Conference
 import csv
-from collections import defaultdict
-from datetime import date, datetime, time, timedelta
+
+from datetime import date, datetime, time
+
+from conference import Conference
+from track import Track
+from session import AMSession, PMSession
+from talk import Talk
+
 '''
 Define time constants that will
 be used for sessions in this particular 
@@ -79,9 +80,41 @@ def main():
 	'''
 	total_time_for_all_talks = sum(t.duration for t in all_talks)
 
+	t1 = Track("Track One",
+			[
+				AMSession(SESSION_DURATION['AM']), 
+				PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+			]
+	)
 
+	t2 = Track("Track Two",
+			[
+				AMSession(SESSION_DURATION['AM']), 
+				PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
+			]
+	)
+
+
+	c = Conference(SESSION_TIMINGS['MORNING'], 
+					SESSION_TIMINGS['LUNCH'], 
+					SESSION_TIMINGS['AFTERNOON'])
+	c.append(t1)
+	c.append(t2)
+
+	'''
+	Check to ensure that our sessions have been allocated enough
+	time to fit in all the talks in the list
+	'''
+	if total_time_for_all_talks > c.time_allocated():
+		print("Please allocate more space to the sessions in order to " + \
+				"accomodate all the talks.\n" + \
+				"Total talk time: {}\nTotal time allocated in sessions:{}\n\n".format(total_time_for_all_talks, c.time_allocated()))
+
+		sys.exit()
 
 	i = 0
+
+
 
 	while True:
 
@@ -89,37 +122,10 @@ def main():
 
 		random.shuffle(talks)
 
-		t1 = Track("Track One",
-					AMSession(SESSION_DURATION['AM']), 
-					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
-		)
-
-		t2 = Track("Track Two",
-					AMSession(SESSION_DURATION['AM']), 
-					PMSession(SESSION_DURATION['PM_MAX'], SESSION_DURATION['PM_MIN'])
-		)
-
-
-		c = Conference(SESSION_TIMINGS['MORNING'], 
-						SESSION_TIMINGS['LUNCH'], 
-						SESSION_TIMINGS['AFTERNOON'])
-		c.append(t1)
-		c.append(t2)
-
-		'''
-		Check to ensure that our sessions have been allocated enough
-		time to fit in all the talks in the list
-		'''
-		if total_time_for_all_talks > c.time_allocated():
-			print("Please allocate more space to the sessions in order to " + \
-					"accomodate all the talks.\n" + \
-					"Total talk time: {}\nTotal time allocated in sessions:{}\n\n".format(total_time_for_all_talks, c.time_allocated()))
-
-			sys.exit()
-
 		''' 
-		Multi-capacity bin that we will populate with talks
+		Prepare multi-capacity bin that we will use to populate with talks
 		'''
+		c.reset_sessions()
 		sessions = c.get_all_sessions()
 
 
@@ -146,9 +152,17 @@ def main():
 			Start doing first-fit bin packing
 			'''
 			for session in sessions:
+
+				'''
+				Continue to the next bin if current bin is full
+				'''
 				if session.is_full():
 					continue
 
+				'''
+				Add talk to bin. Remove talk from the list 
+				Proceed to finding a place for the next talk
+				'''
 				if session.append(talks[0]):
 					can_fit_in_at_least_one_session = True
 					talks.pop(0)
